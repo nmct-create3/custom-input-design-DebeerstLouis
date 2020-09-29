@@ -701,7 +701,8 @@ input::placeholder {
     width: 6px;
     height: 6pX;
     display: flex;
-    fill: #2e77e6;
+    background-color: #2e77e6;
+    border-radius: 100%;
   }
 
 /*
