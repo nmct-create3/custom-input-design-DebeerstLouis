@@ -654,11 +654,12 @@ input::placeholder {
 }
 
 .c-option--hidden:checked + .c-custom-option {
-  background-color: red;
+  color: #606274;
 }
 
 .c-option--hidden:checked + .c-custom-option .c-custom-option__symbol {
   fill: blue;
+  opacity: 100%;
 }
 
 .c-custom-option{
@@ -666,6 +667,7 @@ input::placeholder {
 }
 
 .c-custom-option__fake-input {
+    
     width: 16px;
     height: 16px;
     border: 1px solid var(--global-color-neutral-light);
@@ -683,6 +685,24 @@ input::placeholder {
 .c-custom-option__fake-input--radio{
     border-radius: 100%;
 }
+
+.c-custom-option__symbol{
+    opacity: 0;
+}
+
+.c-custom-option__fake-input--checkbox .c-custom-option__symbol {
+    width: 10px;
+    height: 10pX;
+    display: flex;
+    
+  }
+  
+  .c-custom-option__fake-input--radio .c-custom-option__symbol {
+    width: 6px;
+    height: 6pX;
+    display: flex;
+    fill: #2e77e6;
+  }
 
 /*
     Component: Label
