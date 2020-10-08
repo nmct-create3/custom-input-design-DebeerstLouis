@@ -57,13 +57,44 @@
   --global-whitespace-xl: calc(var(--global-whitespace) * 2); /*  = 48px */
   --global-whitespace-xxl: calc(var(--global-whitespace) * 3); /*  = 72px */
 
-  /* border, background, color en box-shadow */
   --global-input-backgroundColor: White;
   --global-input-color: var(--global-color-neutral-xxxx-dark);
   --global-input-borderColor: var(--global-color-neutral-xxx-light);
   --global-input-hover-borderColor: var(--global-color-neutral-xx-light);
   --global-input-focus-borderColor: var(--global-color-alpha);
   --global-input-boxShadow: 0 0 0 3px var(--global-color-alpha-x-transparent);
+  --global-input-placeholderColor: var(--global-color-neutral-x-light);
+
+  /* Global var colors */
+  --global-page-backgroundColor: var(--global-color-neutral-xxxx-light);
+  --global-page-color: var(--global-color-neutral-xxxx-dark);
+
+  --global-card-backgroundColor: White;
+  --global-card-footerColor: var(--global-color-neutral-xxx-light);
+  --global-card-labelColor: var(--global-color-neutral-xx-dark);
+
+  --global-custom-options-backgroundColor: White;
+  --global-custom-options-borderColor: var(--global-color-neutral-xxx-light);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --global-page-backgroundColor: var(--global-color-neutral-xxxx-dark);
+    --global-page-color: white;
+
+    --global-card-backgroundColor: var(--global-color-neutral-xxx-dark);
+    --global-card-footerColor: var(--global-color-neutral-xxxx-dark);
+    --global-card-labelColor: var(--global-color-neutral-x-light);
+
+    --global-input-backgroundColor: var(--global-color-neutral-xxxx-dark);
+    --global-input-borderColor: var(--global-color-neutral-xxxx-dark);
+    --global-input-hover-borderColor: var(--global-color-neutral-xx-dark);
+    --global-input-color: var(--global-color-neutral-xxxx-light);
+    --global-input-placeholderColor: var(--global-color-neutral-dark);
+
+    --global-custom-options-backgroundColor: var(--global-color-neutral-xxxx-dark);
+    --global-custom-options-borderColor: var(--global-color-neutral-xxxx-dark);
+  }
 }
 
 /*------------------------------------*\
@@ -80,8 +111,8 @@ html {
   font-size: 16px;
   line-height: 1.5;
   font-family: 'Inter Web', Helvetica, arial, sans-serif;
-  color: var(--global-color-neutral-xxxx-dark);
-  background-color: var(--global-color-neutral-xxxx-light);
+  color: var(--global-page-color);
+  background-color: var(--global-page-backgroundColor);
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -236,25 +267,12 @@ input {
 }
 
 input::placeholder {
-  color: var(--global-color-neutral-x-light);
+  color: var(--global-input-placeholderColor);
 }
 
 /*------------------------------------*\
 #OBJECTS
 \*------------------------------------*/
-
-/* hide accessible */
-
-.o-hide-accessible {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
-}
 
 /*
     Objects: Row
@@ -535,15 +553,23 @@ input::placeholder {
 }
 
 .c-logo__path--1 {
-  fill: var(--global-color-neutral-xxxx-dark);
+  fill: var(--logo__path--1--fill, var(--global-color-neutral-xxxx-dark));
 }
 
 .c-logo__path--2 {
-  fill: var(--global-color-alpha);
+  fill: var(--logo__path--1--fill, var(--global-color-alpha));
 }
 
 .c-logo__path--3 {
-  fill: var(--color-alpha-x-dark);
+  fill: var(--logo__path--1--fill, var(--color-alpha-x-dark));
+}
+
+@media (prefers-color-scheme: dark) {
+  .c-logo {
+    --logo__path--1--fill: White;
+    --logo__path--2--fill: var(--logo__path--1--fill)
+    --logo__path--3--fill: var(--logo__path--1--fill)
+  }
 }
 
 /*
@@ -553,7 +579,7 @@ input::placeholder {
 */
 
 .c-card {
-  background-color: White;
+  background-color: var(--global-card-backgroundColor);
   margin-bottom: var(--global-whitespace);
   border-radius: var(--global-borderRadius);
   box-shadow: 0 0 0 var(--global-borderWidth) rgba(0, 0, 0, 0.05),
@@ -570,7 +596,7 @@ input::placeholder {
 .c-card__footer {
   text-align: center;
   border-top: var(--global-borderWidth) solid
-    var(--global-color-neutral-xxx-light);
+    var(--global-card-footerColor);
 }
 
 .c-card__title {
@@ -624,7 +650,7 @@ input::placeholder {
   -moz-appearance: none;
   appearance: none;
   width: 100%;
-  border: var(var(--global-borderWidth) solid var(--global-input-borderColor));
+  border: var(--global-borderWidth) solid var(--global-input-borderColor);
   border-radius: var(--global-borderRadius);
   color: var(--global-input-color);
   background-color: var(--global-input-backgroundColor);
@@ -643,7 +669,7 @@ input::placeholder {
 
 .c-input:focus,
 .c-input:active {
-  border-color: var(--global-input-focus-borderColor);
+  border-color: var(--global-color-alpha);
   box-shadow: 0 0 0 3px var(--global-color-alpha-x-transparent);
 }
 
@@ -653,57 +679,75 @@ input::placeholder {
   margin-right: var(--global-whitespace-sm);
 }
 
-.c-option--hidden:checked + .c-custom-option {
-  color: #606274;
+.c-option-list {
+  margin-bottom: 24px;
 }
 
-.c-option--hidden:checked + .c-custom-option .c-custom-option__symbol {
-  fill: blue;
-  opacity: 100%;
+.c-option-list__item {
+  margin-bottom: 12px;
 }
 
-.c-custom-option{
-    display: flex;
+.c-option--hidden + .c-custom-option .c-custom-option__fake-input {
+  display: flex;
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--global-custom-options-borderColor);
+  background-color: var(--global-custom-options-backgroundColor);
+  margin-right: 8px;
 }
 
-.c-custom-option__fake-input {
-    
-    width: 16px;
-    height: 16px;
-    border: 1px solid var(--global-color-neutral-light);
-    margin-right: 8px;
-    border: var(var(--global-borderWidth) solid var(--global-input-borderColor));
-    background-color: var(--global-input-backgroundColor);
-    color: var(--global-input-color);
-    
+.c-option--hidden:focus + .c-custom-option .c-custom-option__fake-input {
+  border-color: #3385ff;
+  box-shadow: 0 0 0 3px #3385ff4d;
 }
 
-.c-custom-option__fake-input--checkbox{
-    border-radius: 3px;
+.c-option--hidden:hover + .c-custom-option .c-custom-option__fake-input {
+  border: 1px solid var(--global-input-hover-borderColor);
 }
 
-.c-custom-option__fake-input--radio{
-    border-radius: 100%;
+.c-option--hidden + .c-custom-option .c-custom-option__fake-input--checkbox {
+  border-radius: 3px;
 }
 
-.c-custom-option__symbol{
-    opacity: 0;
+.c-option--hidden + .c-custom-option .c-custom-option__fake-input--radio {
+  border-radius: 100%;
 }
 
-.c-custom-option__fake-input--checkbox .c-custom-option__symbol {
-    width: 10px;
-    height: 10pX;
-    display: flex;
-    
-  }
-  
-  .c-custom-option__fake-input--radio .c-custom-option__symbol {
-    width: 6px;
-    height: 6pX;
-    display: flex;
-    background-color: #2e77e6;
-    border-radius: 100%;
-  }
+.c-custom-option__symbol {
+  opacity: 0;
+}
+
+.c-option--hidden:checked
+  + .c-custom-option
+  .c-custom-option__fake-input--checkbox
+  .c-custom-option__symbol {
+  width: 10px;
+  height: 10px;
+  fill: #3385ff;
+  display: block;
+  margin: auto;
+  opacity: 1;
+  transition: all 0.5s ease;
+}
+
+.c-option--hidden:checked
+  + .c-custom-option
+  .c-custom-option__fake-input--radio
+  .c-custom-option__symbol {
+  width: 6px;
+  height: 6px;
+  background-color: #3385ff;
+  border-radius: 100%;
+  display: block;
+  margin: auto;
+  opacity: 1;
+  transition: all 0.5s ease;
+}
+
+.c-custom-option {
+  display: flex;
+  align-items: flex-start;
+}
 
 /*
     Component: Label
@@ -716,7 +760,7 @@ input::placeholder {
   font-size: 14px;
   padding-bottom: var(--global-whitespace-xs);
   line-height: calc(var(--global-baseline) * 2);
-  color: var(--global-color-neutral-xx-dark);
+  color: var(--global-card-labelColor);
 }
 
 .c-label--option {
